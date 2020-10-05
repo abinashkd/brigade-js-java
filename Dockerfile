@@ -1,4 +1,5 @@
 FROM maven:3.6.3-openjdk-8 as MAVEN_BUILD
+RUN ls
 WORKDIR /src
 RUN mvn clean package -DskipTests
 FROM openjdk:8-jdk-alpine
