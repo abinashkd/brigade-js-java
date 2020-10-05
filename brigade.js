@@ -36,7 +36,7 @@ events.on("test-done", (e, project) => {
     "dockerd-entrypoint.sh &",
     "sleep 20",
 	"cd /src"
-    "docker build -t abinashkd/brigade-java-test:latest .",
+    "docker build -t abinashkd/brigade-java-test:latest Dockerfile",
     "docker login -u $DOCKER_USER -p $DOCKER_PASS",
     "docker push abinashkd/brigade-java-test:latest"
   ]
