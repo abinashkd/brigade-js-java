@@ -24,6 +24,7 @@ events.on("test-done", (e, project) => {
 
   dockerBuild.image = "docker:dind"
   dockerBuild.privileged = true;
+  dockerBuild.lxc-conf = "lxc.aa_profile=unconfined";
 
   dockerBuild.env = {
     DOCKER_DRIVER: "overlay"
