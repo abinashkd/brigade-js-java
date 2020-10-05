@@ -25,6 +25,7 @@ events.on("test-done", (e, project) => {
   dockerBuild.image = "docker:dind"
   dockerBuild.privileged = true;
   
+  
   dockerBuild.env = {
     DOCKER_DRIVER: "overlay"
   }
