@@ -8,6 +8,7 @@ events.on("push", (e, project) => {
   testJob.image = "maven:3.6.3-openjdk-8"
 
   testJob.tasks = [
+    "cd /src/"
     "mvn test"
   ]
 
@@ -34,6 +35,7 @@ events.on("test-done", (e, project) => {
   dockerBuild.tasks = [
     "dockerd-entrypoint.sh &",
     "sleep 20",
+	"cd /src/"
     "docker build -t abinashkd/brigade-java-test:latest .",
     "docker login -u $DOCKER_USER -p $DOCKER_PASS",
     "docker push abinashkd/brigade-java-test:latest"
