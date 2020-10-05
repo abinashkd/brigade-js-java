@@ -8,7 +8,7 @@ events.on("push", (e, project) => {
   testJob.image = "maven:3.6.3-openjdk-8"
 
   testJob.tasks = [
-    "cd /src/",
+    "cd /src",
     "mvn test"
   ]
 
