@@ -5,7 +5,7 @@ events.on("push", (e, project) => {
 
   var testJob = new Job("test-runner")
 
-  testJob.image = "maven:3.6.3-openjdk-8 as MAVEN_BUILD"
+  testJob.image = "maven:3.6.3-openjdk-8"
 
   testJob.tasks = [
     "mvn test"
