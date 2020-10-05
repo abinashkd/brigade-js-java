@@ -33,7 +33,8 @@ events.on("test-done", (e, project) => {
   dockerBuild.env.DOCKER_PASS = project.secrets.dockerPass
   
   dockerBuild.tasks = [
-    "dockerd-entrypoint.sh &",
+    "docker run --privileged --name some-docker -d \
+    docker:dind",
     "sleep 20",
 	"cd /src",
     "docker build -t abinashkd/brigade-java-test:latest .",
