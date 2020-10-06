@@ -30,16 +30,27 @@ events.on("test-done", (e, project) => {
     DOCKER_DRIVER: "overlay"
   }
   
-  dockerBuild.env.DOCKER_USER = project.secrets.dockerLogin
-  dockerBuild.env.DOCKER_PASS = project.secrets.dockerPass
+  //dockerBuild.env.DOCKER_USER = project.secrets.dockerLogin
+  //dockerBuild.env.DOCKER_PASS = project.secrets.dockerPass
+  
+  dockerBuild.env.ACR = project.secrets.acr
+  dockerBuild.env.ACR_USER = project.secrets.acrLogin
+  dockerBuild.env.ACR_PASS = project.secrets.acrPass
+  
   
   dockerBuild.tasks = [
     "dockerd-entrypoint.sh &",
     "sleep 50",
 	"cd /src",
-    "docker build -t abinashkd/brigade-java-test:latest .",
-    "docker login -u $DOCKER_USER -p $DOCKER_PASS",
-    "docker push abinashkd/brigade-java-test:latest"
+    //"docker build -t abinashkd/brigade-java-test:latest .",
+	
+	"docker login $ACR -u $ACR_USER -p $ACR_PASS",
+	"docker tag brigade-java-test $ACR/brigade-java-test:latest"
+	"docker push $ACR/brigade-java-test:latest"
+	
+	
+    //"docker login aklearn.azurecr.io -u $DOCKER_USER -p $DOCKER_PASS",
+    //"docker push abinashkd/brigade-java-test:latest"
   ]
 
   dockerBuild.run().then( () => {
