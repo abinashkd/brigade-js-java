@@ -14,7 +14,6 @@ events.on("push", (e, project) => {
     "kubectl apply -f deploy.yaml"
   ]
   
-  
   deploy.run().then( () => {
     events.emit("success", e, project)
   })
