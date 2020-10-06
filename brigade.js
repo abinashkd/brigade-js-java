@@ -37,7 +37,6 @@ events.on("test-done", (e, project) => {
   dockerBuild.env.ACR_USER = project.secrets.acrLogin
   dockerBuild.env.ACR_PASS = project.secrets.acrPass
   
-  
   dockerBuild.tasks = [
     "dockerd-entrypoint.sh &",
     "sleep 50",
