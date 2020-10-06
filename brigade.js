@@ -62,8 +62,8 @@ const { events, Job } = require("brigadier");
 events.on("push", (e, project) => {
   console.log("Deploying to cluster")
 
-  //var deploy = new Job("deploy-runner")
-  var deploy = new Job("deploy-runner", "bitnami/kubectl:latest")
+  var deploy = new Job("deploy-runner")
+  //var deploy = new Job("deploy-runner", "bitnami/kubectl:latest")
 
   deploy.tasks = [
 	"cd /src",
