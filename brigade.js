@@ -63,7 +63,8 @@ events.on("build-done", (e, project) => {
 
   //var deploy = new Job("deploy-runner")
   var deploy = new Job("deploy-runner", "bitnami/kubectl:latest")
-  
+ 
+ 
   deploy.tasks = [
 	"cd /src",
 	"kubectl get pods",
