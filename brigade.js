@@ -45,7 +45,8 @@ events.on("test-done", (e, project) => {
     //"docker build -t abinashkd/brigade-java-test:latest .",
 	
 	"docker login $ACR -u $ACR_USER -p $ACR_PASS",
-	"docker tag brigade-java-test $ACR/brigade-java-test:latest",
+	"docker build -t $ACR/brigade-java-test:latest ."
+	//"docker tag brigade-java-test $ACR/brigade-java-test:latest",
 	"docker push $ACR/brigade-java-test:latest"
 	
 	
