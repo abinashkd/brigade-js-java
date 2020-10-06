@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: brigade-java-test
+  labels:
+    app: brigade-java-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: brigade-java-test
+  template:
+    metadata:
+      labels:
+        app: brigade-java-test
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - args:
+        - -c
+        image: healthcarecr.azurecr.io/brigade-java-test:latest
+        imagePullPolicy: ""
+        name: brigade-java-test
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "250m"
+          limits:
+            cpu: "500m"
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: brigade-java-test
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: brigade-java-test
+status:
+  loadBalancer: {}
+
