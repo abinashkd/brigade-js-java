@@ -9,6 +9,8 @@ events.on("push", (e, project) => {
   
   deploy.tasks = [
 	"cd /src",
+	"kubectl get pods",
+	"kubectl get deployments",
     "kubectl apply -f deploy.yaml"
   ]
 
