@@ -79,8 +79,34 @@ events.on("build-done", (e, project) => {
 
 events.on("error", (e, project) => {
   console.log("Notifying Slack of failure")
+  var slack = new Job("slack-notify", "technosophos/slack-notify:latest", ["/slack-notify"])
+
+  // This doesn't need access to storage, so skip mounting to speed things up.
+  slack.storage.enabled = false
+  slack.env = {
+    // It's best to store the slack webhook URL in a project's secrets.
+    SLACK_WEBHOOK: project.secrets.SLACK_WEBHOOK,
+    SLACK_USERNAME: "MyBot",
+    SLACK_TITLE: "CI/CD Deployment failure",
+    SLACK_MESSAGE: "The CI/CD Deployment is failure",
+    SLACK_COLOR: "#0000ff"
+  }
+  slack.run()
 })
 
 events.on("success", (e, project) => {
   console.log("Notifying Slack of success")
+  var slack = new Job("slack-notify", "technosophos/slack-notify:latest", ["/slack-notify"])
+
+  // This doesn't need access to storage, so skip mounting to speed things up.
+  slack.storage.enabled = false
+  slack.env = {
+    // It's best to store the slack webhook URL in a project's secrets.
+    SLACK_WEBHOOK: project.secrets.SLACK_WEBHOOK,
+    SLACK_USERNAME: "MyBot",
+    SLACK_TITLE: "CI/CD Deployment Success",
+    SLACK_MESSAGE: "The CI/CD Deployment is Success",
+    SLACK_COLOR: "#0000ff"
+  }
+  slack.run()
 })
