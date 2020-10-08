@@ -20,7 +20,7 @@ spec:
       containers:
       - args:
         - -c
-        image: healthcarecr.azurecr.io/brigade-java-test:latest
+        image: healthcarecr.azurecr.io/brigade-java-test:$tag
         imagePullPolicy: Always
         name: brigade-java-test
         ports:

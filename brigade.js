@@ -36,6 +36,7 @@ events.on("test-done", (e, project) => {
   dockerBuild.env.ACR = project.secrets.acr
   dockerBuild.env.ACR_USER = project.secrets.acrLogin
   dockerBuild.env.ACR_PASS = project.secrets.acrPass
+  dockerBuild.env.BUILD_ID = e.buildID
   
   dockerBuild.tasks = [
     "dockerd-entrypoint.sh &",
@@ -44,7 +45,7 @@ events.on("test-done", (e, project) => {
     //"docker build -t abinashkd/brigade-java-test:latest .",
 	
 	"docker login $ACR -u $ACR_USER -p $ACR_PASS",
-	"docker build -t $ACR/brigade-java-test:latest .",
+	"docker build -t $ACR/brigade-java-test:$BUILD_ID .",
 	//"docker tag brigade-java-test $ACR/brigade-java-test:latest",
 	"docker push $ACR/brigade-java-test:latest"
 	
@@ -63,13 +64,15 @@ events.on("build-done", (e, project) => {
 
   //var deploy = new Job("deploy-runner")
   var deploy = new Job("deploy-runner", "bitnami/kubectl:latest")
- 
+  deploy.env.BUILD_ID = e.buildID 
  
   deploy.tasks = [
 	"cd /src",
 	"kubectl get pods",
 	"kubectl get deployments",
-    "kubectl apply -f deploy.yaml"
+	"export tag=$BUILD_ID",
+    "envsubst < deploy.yaml | kubectl apply -f -"
+    //"kubectl apply -f deploy.yaml"
   ]
   
   deploy.run().then( () => {
