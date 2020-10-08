@@ -47,7 +47,7 @@ events.on("test-done", (e, project) => {
 	"docker login $ACR -u $ACR_USER -p $ACR_PASS",
 	"docker build -t $ACR/brigade-java-test:$BUILD_ID .",
 	//"docker tag brigade-java-test $ACR/brigade-java-test:latest",
-	"docker push $ACR/brigade-java-test:latest"
+	"docker push $ACR/brigade-java-test:$BUILD_ID"
 	
 	
     //"docker login aklearn.azurecr.io -u $DOCKER_USER -p $DOCKER_PASS",
