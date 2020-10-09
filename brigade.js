@@ -76,7 +76,7 @@ events.on("build-done", (e, project) => {
 	
  
   deploy.tasks = [
-	"echo $BUILD_ID"
+	"echo $BUILD_ID",
 	"cd /src",
 	"kubectl get pods",
 	"kubectl get deployments",
