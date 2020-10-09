@@ -83,13 +83,13 @@ events.on("push", (e, project) => {
 	"kubectl get deployments",
 	"export tag=$BUILD_ID",
 	"echo images: >> kustomization.yaml",
-	/* cat <<EOF >./kustomization.yaml
+	`cat <<EOF >./kustomization.yaml
      images:
       - name: healthcarecr.azurecr.io/brigade-java-test // match images with this name
-	    newTag: $BUILD_ID // override the tag
+	    newTag: $tag // override the tag
      resources:
       - deploy.yaml
-     EOF, */
+     EOF`, 
     //"kubectl apply -f deploy.yaml"
 	"cat kustomization.yaml",
 	//"kubectl apply -k .",
