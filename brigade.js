@@ -65,19 +65,21 @@ events.on("build-done", (e, project) => {
   //var deploy = new Job("deploy-runner")
   var deploy = new Job("deploy-runner", "bitnami/kubectl:latest")
   deploy.env.BUILD_ID = e.buildID 
+  var kustomizationString = `
+  cat <<EOF >./kustomization.yaml
+     resources:
+      - deploy.yaml
+     images:
+      - name: brigade-java-test
+        newTag: $BUILD_ID
+     EOF`
  
   deploy.tasks = [
 	"cd /src",
 	"kubectl get pods",
 	"kubectl get deployments",
 	"export tag=$BUILD_ID",
-	`cat <<EOF >./kustomization.yaml
-     resources:
-      - deploy.yaml
-     images:
-      - name: brigade-java-test
-        newTag: $BUILD_ID
-     EOF`,
+	"$kustomizationString",
     //"envsubst < deploy.yaml | kubectl apply -f -"
     //"kubectl apply -f deploy.yaml"
 	kubectl apply -k .
