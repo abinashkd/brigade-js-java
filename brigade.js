@@ -82,9 +82,9 @@ events.on("push", (e, project) => {
 	"kubectl get pods",
 	"kubectl get deployments",
 	"export tag=$BUILD_ID",
-	"echo images: >> kustomization.yaml",
-	"echo  - name: healthcarecr.azurecr.io/brigade-java-test // match images with this name >> kustomization.yaml",
-	"echo    newTag: $tag >> kustomization.yaml",
+	"echo 'images:' >> kustomization.yaml",
+	"echo '  - name: healthcarecr.azurecr.io/brigade-java-test // match images with this name' >> kustomization.yaml",
+	"echo '  newTag: $tag' >> kustomization.yaml",
 	/*`cat <<EOF >./kustomization.yaml
      images:
       - name: healthcarecr.azurecr.io/brigade-java-test // match images with this name
