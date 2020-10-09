@@ -1,6 +1,6 @@
 const { events, Job } = require("brigadier");
 
-events.on("push", (e, project) => {
+/* events.on("push", (e, project) => {
   console.log("received push for commit " + e.commit)
 
   var testJob = new Job("test-runner")
@@ -16,8 +16,8 @@ events.on("push", (e, project) => {
     events.emit("test-done", e, project)
   })
 })
-
-events.on("test-done", (e, project) => {
+ */
+events.on("push", (e, project) => {
   console.log("Building docker image")
 
   var dockerBuild = new Job("docker-build")
@@ -73,8 +73,10 @@ events.on("build-done", (e, project) => {
       - name: brigade-java-test
         newTag: $BUILD_ID
      EOF` */
+	
  
   deploy.tasks = [
+	"echo $BUILD_ID"
 	"cd /src",
 	"kubectl get pods",
 	"kubectl get deployments",
@@ -87,7 +89,9 @@ events.on("build-done", (e, project) => {
       - deploy.yaml
      EOF`,
     //"kubectl apply -f deploy.yaml"
+	"cat kustomization.yaml"
 	"kubectl apply -k ."
+	"cat deploy.yaml"
   ]
   
   deploy.run().then( () => {
