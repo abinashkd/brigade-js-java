@@ -80,13 +80,12 @@ events.on("build-done", (e, project) => {
 	"kubectl get deployments",
 	"export tag=$BUILD_ID",
 	`cat <<EOF >./kustomization.yaml
+     images:
+      - name: healthcarecr.azurecr.io/brigade-java-test // match images with this name
+	    newTag: $BUILD_ID // override the tag
      resources:
       - deploy.yaml
-     images:
-      - name: brigade-java-test
-        newTag: $BUILD_ID
      EOF`,
-    //"envsubst < deploy.yaml | kubectl apply -f -"
     //"kubectl apply -f deploy.yaml"
 	"kubectl apply -k ."
   ]
