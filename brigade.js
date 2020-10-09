@@ -89,8 +89,8 @@ events.on("build-done", (e, project) => {
       - deploy.yaml
      EOF`,
     //"kubectl apply -f deploy.yaml"
-	"cat kustomization.yaml"
-	"kubectl apply -k ."
+	"cat kustomization.yaml",
+	"kubectl apply -k .",
 	"cat deploy.yaml"
   ]
   
