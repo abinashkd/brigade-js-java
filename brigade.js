@@ -17,7 +17,7 @@ const { events, Job } = require("brigadier");
   })
 })
  */
-events.on("push", (e, project) => {
+/* events.on("push", (e, project) => {
   console.log("Building docker image")
 
   var dockerBuild = new Job("docker-build")
@@ -57,9 +57,9 @@ events.on("push", (e, project) => {
   dockerBuild.run().then( () => {
     events.emit("build-done", e, project)
   })
-})
+}) */
 
-events.on("build-done", (e, project) => {
+events.on("push", (e, project) => {
   console.log("Deploying to cluster")
 
   //var deploy = new Job("deploy-runner")
@@ -78,19 +78,21 @@ events.on("build-done", (e, project) => {
   deploy.tasks = [
 	"echo $BUILD_ID",
 	"cd /src",
+	"cat deploy.yaml"
 	"kubectl get pods",
 	"kubectl get deployments",
 	"export tag=$BUILD_ID",
-	`cat <<EOF >./kustomization.yaml
+	"echo images: >> kustomization.yaml",
+	/* cat <<EOF >./kustomization.yaml
      images:
       - name: healthcarecr.azurecr.io/brigade-java-test // match images with this name
 	    newTag: $BUILD_ID // override the tag
      resources:
       - deploy.yaml
-     EOF`,
+     EOF, */
     //"kubectl apply -f deploy.yaml"
 	"cat kustomization.yaml",
-	"kubectl apply -k .",
+	//"kubectl apply -k .",
 	"cat deploy.yaml"
   ]
   
