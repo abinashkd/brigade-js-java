@@ -77,7 +77,7 @@ events.on("build-done", (e, project) => {
      images:
       - name: brigade-java-test
         newTag: $BUILD_ID
-     EOF`
+     EOF`,
     //"envsubst < deploy.yaml | kubectl apply -f -"
     //"kubectl apply -f deploy.yaml"
 	kubectl apply -k .
