@@ -78,7 +78,7 @@ events.on("push", (e, project) => {
   deploy.tasks = [
 	"echo $BUILD_ID",
 	"cd /src",
-	"cat deploy.yaml"
+	"cat deploy.yaml",
 	"kubectl get pods",
 	"kubectl get deployments",
 	"export tag=$BUILD_ID",
