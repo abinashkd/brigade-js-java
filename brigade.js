@@ -1,6 +1,6 @@
 const { events, Job } = require("brigadier");
 
-/* events.on("push", (e, project) => {
+events.on("push", (e, project) => {
   console.log("received push for commit " + e.commit)
 
   var testJob = new Job("test-runner")
@@ -16,8 +16,8 @@ const { events, Job } = require("brigadier");
     events.emit("test-done", e, project)
   })
 })
- */
-events.on("push", (e, project) => {
+
+events.on("test-done", (e, project) => {
   console.log("Building docker image")
 
   var dockerBuild = new Job("docker-build")
@@ -87,15 +87,7 @@ events.on("build-done", (e, project) => {
 	'echo "    newTag: $tag" >> kustomization.yaml',
 	'echo "resources:" >> kustomization.yaml',
 	'echo " - deploy.yaml" >> kustomization.yaml',
-	
-	/*`cat <<EOF >./kustomization.yaml
-     images:
-      - name: healthcarecr.azurecr.io/brigade-java-test // match images with this name
-	    newTag: $tag // override the tag
-     resources:
-      - deploy.yaml
-     EOF`, */
-    //"kubectl apply -f deploy.yaml"
+
 	"cat kustomization.yaml",
 	"kubectl apply -k .",
 	"cat deploy.yaml"
