@@ -43,7 +43,6 @@ events.on("test-done", (e, project) => {
     "sleep 50",
 	"cd /src",
     //"docker build -t abinashkd/brigade-java-test:latest .",
-	
 	"docker login $ACR -u $ACR_USER -p $ACR_PASS",
 	"docker build -t $ACR/brigade-java-test:$BUILD_ID .",
 	//"docker tag brigade-java-test $ACR/brigade-java-test:latest",
